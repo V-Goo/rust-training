@@ -41,4 +41,12 @@ let first = &v[0];
 println!("The first element is: {:?}", v);
 println!("The first element is: {}", first);
 
+let mut st = String::from("Hi");
+let sr = String::from("Lo");
+st = st + &sr;
+println!("{}", st);
+
+for c in "नमस्ते".chars() {
+    println!("{}", c)
+}
 }
