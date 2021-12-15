@@ -4,8 +4,13 @@ use std::io;
 // use std::io::Read;
 use std::io::ErrorKind;
 use std::error::Error;
+use std::net::IpAddr;
+
 
 fn main() -> Result<(), Box<dyn Error>>{
+    let home: IpAddr = "127..0.1".parse()?;
+    // let home: IpAddr = "127..0.1".parse().expect("Я сказал IP адрес!!!");
+    println!("{:#?}", home);
     let f = File::open("open.txt").unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
             File::create("open.txt").unwrap_or_else(|error| {
