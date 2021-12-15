@@ -1,0 +1,27 @@
+use std::env;
+use std::fs;
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    let config = parse_config(&args);
+
+    println!("Searching for {}", config.query);
+    println!("In file {}", config.filename);
+
+    let contetnt = fs::read_to_string(config.filename).expect("Ничего не понимаю!");
+
+    println!("With text:\n{}", contetnt);
+}
+
+struct Config {
+    query: String,
+    filename: String,
+}
+
+fn parse_config(args: &[String]) -> Config {
+    let query = args[1].clone();
+    let filename = args[2].clone();
+
+    Config { query, filename }
+}
