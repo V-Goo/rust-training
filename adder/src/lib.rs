@@ -1,9 +1,9 @@
+// #[warn(dead_code)]
 #[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
 }
-
 impl Rectangle {
     fn can_hold(&self, other: &Rectangle) -> bool {
         self.width > other.width && self.height > other.height
@@ -17,18 +17,15 @@ pub fn add_two(a: i32) -> i32 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    // #[test]
-    // fn it_works() {
-    //     assert_eq!(2 + 2, 4);
-    // }
-
-    // #[test]
-    // fn another() {
-    //     panic!("Это конец!!!");
-    // }
-
-    // #[cfg(test)]
-    // mod tests {
+    #[test]
+    fn it_works() -> Result<(), String> {
+        if 2 + 2 == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four"))
+        }
+    }
+    
     #[test]
     fn larger_can_hold_smaller() {
         let larger = Rectangle {
@@ -55,6 +52,7 @@ mod tests {
     }
     #[test]
     fn it_add_two() {
-        assert_eq!(6, add_two(4));
+        let r = add_two(1);
+        assert_eq!(6, r, "Уимись {} раза", r );
     }
 }
