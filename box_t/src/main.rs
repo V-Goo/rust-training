@@ -1,9 +1,9 @@
 use std::ops::Deref;
 
-enum List {
-    Cons(i32, Box<List>),
-    Nil,
-}
+// enum List {
+//     Cons(i32, Box<List>),
+//     Nil,
+// }
 
 struct MyBox<T>(T);
 
@@ -12,7 +12,7 @@ impl<T> MyBox<T> {
         MyBox(x)
     }
 }
-
+#[derive(Debug)]
 struct CustomSmartPointer {
     data: String,
 }
@@ -61,5 +61,6 @@ fn main() {
     let d = CustomSmartPointer {
         data: String::from("other stuff"),
     };
-    println!("CustomSmartPointers created.");
+    // assert_eq!(c, d);
+    println!("CustomSmartPointers created.\n{:#?} {:#?}", c, d);
 }
