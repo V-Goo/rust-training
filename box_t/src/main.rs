@@ -1,9 +1,10 @@
 use std::ops::Deref;
 
-// enum List {
-//     Cons(i32, Box<List>),
-//     Nil,
-// }
+#[allow(dead_code)]
+enum List {
+    Cons(i32, Box<List>),
+    Nil,
+}
 
 struct MyBox<T>(T);
 
@@ -12,6 +13,7 @@ impl<T> MyBox<T> {
         MyBox(x)
     }
 }
+
 #[derive(Debug)]
 struct CustomSmartPointer {
     data: String,
@@ -30,7 +32,6 @@ impl<T> Deref for MyBox<T> {
         &self.0
     }
 }
-
 fn main() {
     let b = Box::new(5);
     println!("b = {}", b);
@@ -61,6 +62,5 @@ fn main() {
     let d = CustomSmartPointer {
         data: String::from("other stuff"),
     };
-    // assert_eq!(c, d);
-    println!("CustomSmartPointers created.\n{:#?} {:#?}", c, d);
+    println!("CustomSmartPointers created. {:?}, {:?}", c, d);
 }

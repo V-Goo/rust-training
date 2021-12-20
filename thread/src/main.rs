@@ -1,6 +1,6 @@
+use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
-use std::sync::mpsc;
 
 fn main() {
     let handle = thread::spawn(|| {
@@ -9,6 +9,7 @@ fn main() {
             thread::sleep(Duration::from_millis(1));
         }
     });
+
     for i in 1..5 {
         println!("hi number {} from the main thread!", i);
         thread::sleep(Duration::from_millis(1));
