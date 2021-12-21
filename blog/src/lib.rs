@@ -30,7 +30,7 @@ impl Post {
         }
     }
 }
-
+#[allow(unused_variables)]
 trait State {
     fn request_review(self: Box<Self>) -> Box<dyn State>;
     fn approve(self: Box<Self>) -> Box<dyn State>;
@@ -69,6 +69,6 @@ impl State for Published {
         self
     }
     fn content<'a>(&self, post: &'a Post) -> &'a str {
-        &post.content()
+        &post.content
     }
 }
