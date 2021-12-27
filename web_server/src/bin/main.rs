@@ -7,12 +7,17 @@ use std::time::Duration;
 
 fn main() {
     let listener = TcpListener::bind("127.0.01:7878").unwrap();
+    let pool = ThreadPool::new(4);
     // #[allow(unused_variables)]
     for stream in listener.incoming() {
         let stream = stream.unwrap();
         // println!("Присоединяйся!");
 
-        thread::spawn(|| {
+        // thread::spawn(|| {
+        //     handle_connection(stream);
+        // });
+
+        pool.execute(|| {
             handle_connection(stream);
         });
     }
