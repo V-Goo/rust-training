@@ -4,15 +4,23 @@ use std::net::TcpListener;
 use std::net::TcpStream;
 use std::thread;
 use std::time::Duration;
+use web_server::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.01:7878").unwrap();
-    #[allow(unused_variables)]
+    let pool = ThreadPool::new(4);
+    // #[allow(unused_variables)]
     for stream in listener.incoming() {
         let stream = stream.unwrap();
         // println!("Присоединяйся!");
 
-        handle_connection(stream);
+        // thread::spawn(|| {
+        //     handle_connection(stream);
+        // });
+
+        pool.execute(|| {
+            handle_connection(stream);
+        });
     }
 }
 
