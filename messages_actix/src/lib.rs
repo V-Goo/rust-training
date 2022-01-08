@@ -20,7 +20,7 @@ impl MessageApp {
 					.wrap(middleware::Logger::default())
 					.service(index)
 		})
-		.bind(("127.0.0.1". self.port))?
+		.bind(("127.0.0.1", self.port))?
 		.workers(8)
 		.run()
 	}
@@ -38,8 +38,10 @@ fn index(req: HttpRequest) -> Result<web::Json<IndexResponse>> {
 	.get("hello")
 	.and_then(|v| v.to_str().ok())
 	.unwrap_or_else(|| "world");
-
+	
 	Ok(web::Json(IndexResponse {
 		message: hello.to_owned(),
 	}))
 }
+
+// ?`and_then` needs to return an `Option`, but `to_str` returned a `Result`. `ok` which takes data from the `Ok` variant of a `Result` and puts it inside the `Some` variant of an `Option`, otherwise it turns the `Err` variant of the `Result` into the `None` variant of `Option` and discards the error. 
