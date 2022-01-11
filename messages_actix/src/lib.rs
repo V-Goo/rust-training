@@ -21,6 +21,13 @@ impl AppState {
     fn new(server_id: usize, request_count: Cell<usize>, messages: Arc<Mutex<Vec<String>>>) -> Self { Self { server_id, request_count, messages } }
 }
 
+#[derive(Serialize)]
+struct  IndexResponse {
+	server_id: usize,
+	request_count: usize,
+	messages: Vec<String>,
+}
+
 pub struct MessageApp {
 	port: u16,	
 }
@@ -43,21 +50,17 @@ impl MessageApp {
 	}
 }
 
-#[derive(Serialize)]
-struct IndexResponse {
-	message: String,
-}
 
 #[get("/")]
-fn index(req: HttpRequest) -> Result<web::Json<IndexResponse>> {
-	let hello = req
-	.headers()
-	.get("hello")
-	.and_then(|v| v.to_str().ok())
-	.unwrap_or_else(|| "world");
+fn index(state: web::Data<AppState>) -> Result<web::Json<IndexResponse>> {
+	let request_count = state.request_count.get() + 1;
+	state.request_count.set(request_count);
+	let ms = state.messages.lock().unwrap();
 	
 	Ok(web::Json(IndexResponse {
-		message: hello.to_owned(),
+		server_id: state.server_id,
+		request_count,
+		messages: ms.clone(),
 	}))
 }
 
